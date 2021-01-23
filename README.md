@@ -1,6 +1,6 @@
 # Activity Detector
 
-[![npm](https://img.shields.io/github/license/filipjelic/ActivityDetector.svg)](https://www.npmjs.com/package/react-activity-detector-component)
+[![npm](https://img.shields.io/github/license/filipjelic/ActivityDetector.svg)](https://www.npmjs.com/package/react-activity-detector)
 
 This components helps you detect when your user has become idle, or not interacting with your application. It is also cross-tab.
 
