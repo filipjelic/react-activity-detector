@@ -6,7 +6,7 @@ This components helps you detect when your user has become idle, or not interact
 
 ## Install
 ```
-$ npm i react-activity-detector-component
+$ npm i react-activity-detector
 ```
 
 ## How to use
