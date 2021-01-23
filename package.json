@@ -1,6 +1,6 @@
 {
   "name": "react-activity-detector",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "React Activity Detector. Detects if the user is active or idle. Cross-Tab functionality",
   "private": false,
   "babel": {
