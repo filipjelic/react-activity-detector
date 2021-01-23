@@ -2,12 +2,7 @@
   "name": "react-activity-detector",
   "version": "0.0.2",
   "description": "React Activity Detector. Detects if the user is active or idle. Cross-Tab functionality",
-  "private": false,
-  "babel": {
-    "presets": [
-      "@babel/preset-react"
-    ]
-  },
+  "homepage": "https://github.com/filipjelic/ActivityDetector",
   "keywords": [
     "user",
     "active",
@@ -20,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/filipjelic/ActivityDetector"
   },
   "main": "./lib/ActivityDetector.js",
   "license": "MIT",
@@ -29,8 +24,8 @@
   },
   "peerDependencies": {
     "prop-types": "^15.6.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
@@ -40,8 +35,8 @@
     "babel-preset-stage-0": "^6.24.1",
     "path": "^0.12.7",
     "prop-types": "^15.6.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "webpack": "^4.5.0",
     "webpack-cli": "^3.2.1"
   }
