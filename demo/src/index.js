@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
 import ActivityDetector from 'react-activity-detector';
 
 const customActivityEvents = [
@@ -7,14 +7,21 @@ const customActivityEvents = [
   'keydown',
 ];
 
-const signOut =()=> {
+const signOut = () => {
 console.log("The user is loged out");
 }
 
-render(
-  <div>
-    <h2>React Boilerplate Demo</h2>
-    <ActivityDetector activityEvents={customActivityEvents} isActive={true} timeout={5*1000} signOut={signOut}/>
-  </div>, 
-  document.getElementById('app')
+
+ReactDOM.render(
+  <React.StrictMode>
+    <div className="App">
+      <header className="App-header">
+        <p>
+          Edit <code>src/App</code> and save to reload.
+        </p>
+        <ActivityDetector activityEvents={customActivityEvents} isActive={true} timeout={5*1000} signOut={signOut}/>
+        </header>
+    </div>
+  </React.StrictMode>,
+  document.getElementById('root')
 );
