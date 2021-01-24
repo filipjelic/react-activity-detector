@@ -16,5 +16,9 @@ module.exports = {
                 use: 'babel-loader'
             }
         ]
-    }
+    },
+    externals: {
+        // don't export React and other dependencies, use parent-project modules instead
+        'react': 'commonjs react',
+    },
 }

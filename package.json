@@ -23,21 +23,20 @@
     "build": "webpack"
   },
   "peerDependencies": {
-    "prop-types": "^15.6.0",
+    "prop-types": "^15.6.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   },
   "devDependencies": {
-    "babel-core": "^6.21.0",
-    "babel-loader": "^7.1.4",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.16.0",
-    "babel-preset-stage-0": "^6.24.1",
+    "@babel/core": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.2",
     "path": "^0.12.7",
-    "prop-types": "^15.6.0",
-    "webpack": "^4.5.0",
-    "webpack-cli": "^3.2.1",
+    "prop-types": "^15.6.2",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "webpack": "^4.23.1",
+    "webpack-cli": "^3.1.2"
   }
 }
