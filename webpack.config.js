@@ -1,18 +1,20 @@
-import { resolve } from 'path';
+var path = require('path');
 
-export const mode = 'production';
-export const entry = './src/ActivityDetector.jsx';
-export const output = {
-    path: resolve('lib'),
-    filename: 'ActivityDetector.js',
-    libraryTarget: 'commonjs2'
-};
-export const module = {
-    rules: [
-        {
-            test: /\.jsx?$/,
-            exclude: /(node_modules)/,
-            use: 'babel-loader'
-        }
-    ]
-};
+module.exports = {
+    mode: 'production',
+    entry:  './src/ActivityDetector.jsx',
+    output: {
+        path: path.resolve('lib'),
+        filename: 'ActivityDetector.js',
+        libraryTarget: 'commonjs2'
+    },
+    module: {
+        rules: [
+            {
+                test: /\.jsx?$/,
+                exclude: /(node_modules)/,
+                use: 'babel-loader'
+            }
+        ]
+    }
+}
