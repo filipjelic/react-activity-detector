@@ -8,7 +8,7 @@ const customActivityEvents = [
 ];
 
 const signOut = () => {
-console.log("The user is loged out");
+console.log("The user is inactive");
 }
 
 
@@ -16,9 +16,7 @@ ReactDOM.render(
   <React.StrictMode>
     <div className="App">
       <header className="App-header">
-        <p>
-          Edit <code>src/App</code> and save to reload.
-        </p>
+        <p>Activity Detector demo</p>
         <ActivityDetector activityEvents={customActivityEvents} isActive={true} timeout={5*1000} signOut={signOut}/>
         </header>
     </div>
