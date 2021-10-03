@@ -11,8 +11,6 @@ const DEFAULT_ACTIVITY_EVENTS = [
     'focus',
 ];
 
-let ACTIVITY_EVENTS = [];
-
 const LOCAL_STORAGE_KEYS = {
     SIGNOUT_TIMER: 1,
 }
@@ -29,10 +27,7 @@ const getCurrentTime = () => new Date().getTime();
 
 let scheduledSignoutTimeout, activityEventInterval;
 
-function ActivityDetector({ activityEvents, timeout = 5 * 60 * 1000, isActive=false, signOut }) {
-
-    ACTIVITY_EVENTS = Object.values(activityEvents).length > 0 ? activityEvents : DEFAULT_ACTIVITY_EVENTS;
-
+const ActivityDetector =({ activityEvents, timeout, isActive, signOut }) => {
     const [timeoutScheduled, setTimeoutScheduled] = useState(false);
 
     const scheduleSignout = time => {
@@ -72,7 +67,7 @@ function ActivityDetector({ activityEvents, timeout = 5 * 60 * 1000, isActive=fa
     };
 
     const attachListeners = () => {
-        ACTIVITY_EVENTS.forEach(eventName =>
+        activityEvents.forEach(eventName =>
             window.addEventListener(eventName, handleUserActivityEvent)
         );
 
@@ -80,7 +75,7 @@ function ActivityDetector({ activityEvents, timeout = 5 * 60 * 1000, isActive=fa
     };
 
     const detachListeners = () => {
-        ACTIVITY_EVENTS.forEach(eventName =>
+        activityEvents.forEach(eventName =>
             window.removeEventListener(eventName, handleUserActivityEvent)
         );
 
@@ -89,7 +84,7 @@ function ActivityDetector({ activityEvents, timeout = 5 * 60 * 1000, isActive=fa
 
     useEffect(() => {
         //user loged in
-        if (isActive === true) {
+        if (isActive) {
             attachListeners();
             // schedule initial timeout
             setTimeoutScheduled(false);
@@ -111,6 +106,12 @@ function ActivityDetector({ activityEvents, timeout = 5 * 60 * 1000, isActive=fa
     }, [timeoutScheduled, timeout]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return timeoutScheduled;
+}
+
+ActivityDetector.defaultProps = {
+    activityEvents: DEFAULT_ACTIVITY_EVENTS,
+    timeout: 5 * 60 * 1000,
+    isActive: false
 }
 
 export default ActivityDetector;
