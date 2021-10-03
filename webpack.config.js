@@ -2,7 +2,7 @@ var path = require('path');
 
 module.exports = {
     mode: 'production',
-    entry:  './src/ActivityDetector.jsx',
+    entry:  './src/ActivityDetector.js',
     output: {
         path: path.resolve('lib'),
         filename: 'ActivityDetector.js',
