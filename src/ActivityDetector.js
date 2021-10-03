@@ -13,15 +13,15 @@ const DEFAULT_ACTIVITY_EVENTS = [
 
 let ACTIVITY_EVENTS = [];
 
-export const LOCAL_STORAGE_KEYS = {
+const LOCAL_STORAGE_KEYS = {
     SIGNOUT_TIMER: 1,
 }
 
-export const storeLastActivityIntoStorage = time => {
+const storeLastActivityIntoStorage = time => {
     localStorage.setItem(LOCAL_STORAGE_KEYS.SIGNOUT_TIMER, time);
 };
 
-export const getLastActivityFromStorage = () => {
+const getLastActivityFromStorage = () => {
     return localStorage.getItem(LOCAL_STORAGE_KEYS.SIGNOUT_TIMER);
 };
 
