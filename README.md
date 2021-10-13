@@ -14,6 +14,8 @@ $ npm install --save react-activity-detector
 
 ### Basic example
 ```javascript
+import ActivityDetector from 'react-activity-detector';
+
 const customActivityEvents = [
     'click',
     'keydown',
