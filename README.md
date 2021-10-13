@@ -31,4 +31,5 @@ console.log("The user is loged out");
 ### Parameter options
 
 - `isActive`: Boolean value indicating if the AD is active or not.
+- `timeout` time in milliseconds which will trigger `signOut`
 - `activityEvents`: events used to detect if the user is active or not. Default list of Activity Events is `['click', 'mousemove', 'keydown', 'DOMMouseScroll', 'mousewheel', 'mousedown', 'touchstart', 'touchmove', 'focus']`. If none event is sent the list will consume the default one.
