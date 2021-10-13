@@ -2,7 +2,7 @@
   "name": "react-activity-detector",
   "version": "0.0.13",
   "description": "React Activity Detector. Detects if the user is active or idle, also includes Cross-Tab functionality",
-  "homepage": "https://github.com/filipjelic/ActivityDetector#readme",
+  "homepage": "https://github.com/filipjelic/react-activity-detector#readme",
   "keywords": [
     "user",
     "active",
@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/filipjelic/ActivityDetector"
+    "url": "https://github.com/filipjelic/react-activity-detector"
   },
   "main": "./lib/ActivityDetector.js",
   "license": "MIT",

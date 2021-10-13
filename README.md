@@ -1,4 +1,4 @@
-# Activity Detector
+# react-activity-detector
 
 [![npm](https://img.shields.io/npm/v/react-activity-detector)](https://www.npmjs.com/package/react-activity-detector)
 [![npm](https://img.shields.io/npm/l/react-activity-detector)](https://www.npmjs.com/package/react-activity-detector)
