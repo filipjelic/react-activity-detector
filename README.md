@@ -1,7 +1,8 @@
 # react-activity-detector 😴
 
 [![npm](https://img.shields.io/npm/v/react-activity-detector)](https://www.npmjs.com/package/react-activity-detector)
-[![npm](https://img.shields.io/npm/l/react-activity-detector)](https://www.npmjs.com/package/react-activity-detector)
+[![License](https://img.shields.io/github/license/filipjelic/react-activity-detector)]((LICENSE))
+[![Build Status](https://github.com/filipjelic/react-activity-detector/actions/workflows/CI-CD.yml/badge.svg)](https://github.com/filipjelic/react-activity-detector/actions)
 
 ## Activity detector is a package which makes it simple to track if your user is still idle or active.
 
