@@ -1,4 +1,4 @@
-name: npm-publish
+name: CI-CD
 on:
   push:
     branches:
