@@ -92,7 +92,7 @@ const ActivityDetector =({ activityEvents, timeout, isActive, signOut }) => {
         return () => {
             stop();
         };
-    }, [isActive]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [isActive]);
 
     useEffect(() => {
         if (!timeoutScheduled) {
@@ -103,7 +103,7 @@ const ActivityDetector =({ activityEvents, timeout, isActive, signOut }) => {
             storeLastActivityIntoStorage(getCurrentTime() + timeout);
         }
         setTimeoutScheduled(true);
-    }, [timeoutScheduled, timeout]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [timeoutScheduled, timeout]);
 
     return timeoutScheduled;
 }
