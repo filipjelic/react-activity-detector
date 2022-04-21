@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/github/license/filipjelic/react-activity-detector)]((LICENSE))
 [![Build Status](https://github.com/filipjelic/react-activity-detector/actions/workflows/CI-CD.yml/badge.svg)](https://github.com/filipjelic/react-activity-detector/actions)
 
-## Activity detector is a package which makes it simple to track if your user is still idle or active.
+## Small and simple library to check if the user is idle.
 
 ### Install
 ```
@@ -22,15 +22,19 @@ const customActivityEvents = [
     'keydown',
 ];
 
-const signOut = () => {
+const onIdle = () => {
 console.log("The user is loged out");
 }
 
-<ActivityDetector activityEvents={customActivityEvents} isActive={true} timeout={5*1000} signOut={signOut}/>
+const onActive = () => {
+console.log("The user is active");
+}
+
+<ActivityDetector activityEvents={customActivityEvents} enabled={true} timeout={5*1000} onIdle={onIdle} onActive={onActive}/>
 ```
 
 ### Parameter options
 
-- `isActive`: Boolean value indicating if the AD is active or not.
+- `enabled`: Boolean value indicating if the AD is enabled or not.
 - `timeout` time in milliseconds which will trigger `signOut`
 - `activityEvents`: events used to detect if the user is active or not. Default list of Activity Events is `['click', 'mousemove', 'keydown', 'DOMMouseScroll', 'mousewheel', 'mousedown', 'touchstart', 'touchmove', 'focus']`. If none event is sent the list will consume the default one.

@@ -12,35 +12,35 @@ const DEFAULT_ACTIVITY_EVENTS = [
 ];
 
 const LOCAL_STORAGE_KEYS = {
-    SIGNOUT_TIMER: 1,
+    IDLE_TIMER: 1,
 }
 
 const storeLastActivityIntoStorage = time => {
-    localStorage.setItem(LOCAL_STORAGE_KEYS.SIGNOUT_TIMER, time);
+    localStorage.setItem(LOCAL_STORAGE_KEYS.IDLE_TIMER, time);
 };
 
 const getLastActivityFromStorage = () => {
-    return localStorage.getItem(LOCAL_STORAGE_KEYS.SIGNOUT_TIMER);
+    return localStorage.getItem(LOCAL_STORAGE_KEYS.IDLE_TIMER);
 };
 
 const getCurrentTime = () => new Date().getTime();
 
-let scheduledSignoutTimeout, activityEventInterval;
+let scheduledIdleTimeout, activityEventInterval;
 
-const ActivityDetector =({ activityEvents, timeout, isActive, signOut }) => {
+const ActivityDetector =({ activityEvents, timeout, enabled, onIdle, onActive }) => {
     const [timeoutScheduled, setTimeoutScheduled] = useState(false);
 
-    const scheduleSignout = time => {
+    const scheduleIdleHandler = time => {
 
-        clearTimeout(scheduledSignoutTimeout);
+        clearTimeout(scheduledIdleTimeout);
 
-        scheduledSignoutTimeout = setTimeout(() => {
+        scheduledIdleTimeout = setTimeout(() => {
             const scheduledInactivityCheck = getLastActivityFromStorage();
             const currentTime = getCurrentTime();
 
             if (currentTime >= scheduledInactivityCheck) {
-                // if already passed scheduled time, do signout
-                signOut("User has loged out due to inactivity");
+                // if already passed scheduled time, call onIdle
+            if (onIdle) onIdle();
             }
         }, time);
     };
@@ -52,17 +52,18 @@ const ActivityDetector =({ activityEvents, timeout, isActive, signOut }) => {
 
     const handleUserActivityEvent = () => {
         resetTimer();
+        if (onActive) onActive();
     };
 
     const handleStorageChangeEvent = ({ key, newValue }) => {
-        if (key === LOCAL_STORAGE_KEYS.SIGNOUT_TIMER) {
-            scheduleSignout(newValue - getCurrentTime());
+        if (key === LOCAL_STORAGE_KEYS.IDLE_TIMER) {
+            scheduleIdleHandler(newValue - getCurrentTime());
         }
     };
 
     const stop = () => {
         detachListeners();
-        clearTimeout(scheduledSignoutTimeout);
+        clearTimeout(scheduledIdleTimeout);
         clearTimeout(activityEventInterval);
     };
 
@@ -83,8 +84,8 @@ const ActivityDetector =({ activityEvents, timeout, isActive, signOut }) => {
     };
 
     useEffect(() => {
-        //user loged in
-        if (isActive) {
+        //library active
+        if (enabled) {
             attachListeners();
             // schedule initial timeout
             setTimeoutScheduled(false);
@@ -92,12 +93,12 @@ const ActivityDetector =({ activityEvents, timeout, isActive, signOut }) => {
         return () => {
             stop();
         };
-    }, [isActive]);
+    }, [enabled]);
 
     useEffect(() => {
         if (!timeoutScheduled) {
-            // on every user activity schedule a new signout
-            scheduleSignout(timeout);
+            // on every user activity schedule a new idle handler
+            scheduleIdleHandler(timeout);
 
             // store scheduled time for other clients
             storeLastActivityIntoStorage(getCurrentTime() + timeout);
@@ -111,7 +112,7 @@ const ActivityDetector =({ activityEvents, timeout, isActive, signOut }) => {
 ActivityDetector.defaultProps = {
     activityEvents: DEFAULT_ACTIVITY_EVENTS,
     timeout: 5 * 60 * 1000,
-    isActive: false
+    enabled: false
 }
 
 export default ActivityDetector;
