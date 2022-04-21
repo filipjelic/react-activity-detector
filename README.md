@@ -23,11 +23,11 @@ const customActivityEvents = [
 ];
 
 const onIdle = () => {
-console.log("The user is loged out");
+console.log("The user seems to be idle...");
 }
 
 const onActive = () => {
-console.log("The user is active");
+console.log("The user is active!");
 }
 
 <ActivityDetector activityEvents={customActivityEvents} enabled={true} timeout={5*1000} onIdle={onIdle} onActive={onActive}/>
@@ -35,6 +35,6 @@ console.log("The user is active");
 
 ### Parameter options
 
-- `enabled`: Boolean value indicating if the AD is enabled or not.
+- `enabled`: Boolean value indicating if the A.D. is enabled.
 - `timeout` time in milliseconds which will trigger `signOut`
-- `activityEvents`: events used to detect if the user is active or not. Default list of Activity Events is `['click', 'mousemove', 'keydown', 'DOMMouseScroll', 'mousewheel', 'mousedown', 'touchstart', 'touchmove', 'focus']`. If none event is sent the list will consume the default one.
+- `activityEvents`: events used to detect if the user is active. Default list of Activity Events is `['click', 'mousemove', 'keydown', 'DOMMouseScroll', 'mousewheel', 'mousedown', 'touchstart', 'touchmove', 'focus']`. If none event is sent the list will consume the default one.
