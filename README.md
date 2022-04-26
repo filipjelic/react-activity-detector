@@ -36,5 +36,5 @@ console.log("The user is active!");
 ### Parameter options
 
 - `enabled`: Boolean value indicating if the A.D. is enabled.
-- `timeout` time in milliseconds which will trigger `signOut`
+- `timeout` time in milliseconds which will trigger `onIdle`
 - `activityEvents`: events used to detect if the user is active. Default list of Activity Events is `['click', 'mousemove', 'keydown', 'DOMMouseScroll', 'mousewheel', 'mousedown', 'touchstart', 'touchmove', 'focus']`. If none event is sent the list will consume the default one.
