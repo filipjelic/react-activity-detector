@@ -1,8 +1,12 @@
 name: CI-CD
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]
+
+  pull_request:
+    branches: [ master ]
+    types: [opened, closed]
+
 jobs:
   deploy:
     name: Publish to NPM
@@ -26,5 +30,6 @@ jobs:
 
       - name: Publish to NPM
         run: npm publish
+        if: github.event.pull_request.merged
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
