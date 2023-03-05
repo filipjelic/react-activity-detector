@@ -1,11 +1,11 @@
 name: CI-CD
 on:
   push:
-    branches:
-      - main
+    branches: [ master ]
+
   pull_request:
-    branches:
-      - main
+    branches: [ master ]
+    types: [opened, closed]
 
 jobs:
   deploy:
