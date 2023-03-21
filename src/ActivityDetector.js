@@ -80,7 +80,6 @@ const ActivityDetector = ({
   };
 
   const attachListeners = () => {
-    console.log('attachListeners', id);
     activityEvents.forEach((eventName) =>
       window.addEventListener(eventName, handleUserActivityEvent)
     );
@@ -89,7 +88,6 @@ const ActivityDetector = ({
   };
 
   const detachListeners = () => {
-    console.log('detachListeners', id);
     activityEvents.forEach((eventName) =>
       window.removeEventListener(eventName, handleUserActivityEvent)
     );
