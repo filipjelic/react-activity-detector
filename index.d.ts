@@ -17,9 +17,15 @@ declare module "react-activity-detector" {
      * Defaults to all events
      */
     activityEvents?: ActivityEvent[];
-    /** Time in milliseconds before user is considered idle */
+    /**
+     * Time in milliseconds before user is considered idle
+     * Defaults to 300000 (5 minutes)
+     */
     timeout?: number;
-    /** Whether to start the detector in an idle state */
+    /**
+     * Whether to start the detector in an idle state
+     * Defaults to false
+     */
     enabled?: boolean;
     /** Event that triggers when user is declared idle */
     onIdle?: () => void;
