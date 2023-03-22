@@ -22,7 +22,7 @@ declare module "react-activity-detector" {
     /**
      * Set a unique id for the detector to allow for multiple detectors
      */
-    id?: string;
+    name?: string;
     /** Event that triggers when user is declared idle */
     onIdle?: () => void;
     /** Event that triggers when user is declared active */

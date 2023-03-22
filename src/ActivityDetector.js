@@ -1,26 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 const DEFAULT_ACTIVITY_EVENTS = [
-  'click',
-  'keydown',
-  'DOMMouseScroll',
-  'mousewheel',
-  'mousedown',
-  'touchstart',
-  'touchmove',
-  'focus',
+  "click",
+  "keydown",
+  "DOMMouseScroll",
+  "mousewheel",
+  "mousedown",
+  "touchstart",
+  "touchmove",
+  "focus",
 ];
 
 const LOCAL_STORAGE_KEYS = {
-  IDLE_TIMER: 'React_Activity_Detector_Idle_Timer',
+  IDLE_TIMER: "React_Activity_Detector_Idle_Timer",
 };
 
 const storeLastActivityIntoStorage = (time, id) => {
-  localStorage.setItem(LOCAL_STORAGE_KEYS.IDLE_TIMER + '-' + id, time);
+  localStorage.setItem(LOCAL_STORAGE_KEYS.IDLE_TIMER + "-" + id, time);
 };
 
 const getLastActivityFromStorage = (id) => {
-  return localStorage.getItem(LOCAL_STORAGE_KEYS.IDLE_TIMER + '-' + id);
+  return localStorage.getItem(LOCAL_STORAGE_KEYS.IDLE_TIMER + "-" + id);
 };
 
 const getCurrentTime = () => new Date().getTime();
@@ -34,14 +34,14 @@ const ActivityDetector = ({
   enabled,
   onIdle,
   onActive,
-  id,
+  name,
 }) => {
   const [timeoutScheduled, setTimeoutScheduled] = useState(false);
   const scheduleIdleHandler = (time) => {
-    clearTimeout(scheduledIdleTimeout[id]);
+    clearTimeout(scheduledIdleTimeout[name]);
 
-    scheduledIdleTimeout[id] = setTimeout(() => {
-      const scheduledInactivityCheck = getLastActivityFromStorage(id);
+    scheduledIdleTimeout[name] = setTimeout(() => {
+      const scheduledInactivityCheck = getLastActivityFromStorage(name);
       const currentTime = getCurrentTime();
 
       if (currentTime >= scheduledInactivityCheck) {
@@ -52,8 +52,8 @@ const ActivityDetector = ({
   };
 
   const resetTimer = () => {
-    clearTimeout(activityEventInterval[id]);
-    activityEventInterval[id] = setTimeout(
+    clearTimeout(activityEventInterval[name]);
+    activityEventInterval[name] = setTimeout(
       () => setTimeoutScheduled(false),
       200
     );
@@ -65,15 +65,15 @@ const ActivityDetector = ({
   };
 
   const handleStorageChangeEvent = ({ key, newValue }) => {
-    if (key === LOCAL_STORAGE_KEYS.IDLE_TIMER + '-' + id) {
+    if (key === LOCAL_STORAGE_KEYS.IDLE_TIMER + "-" + name) {
       scheduleIdleHandler(newValue - getCurrentTime());
     }
   };
 
   const stop = () => {
     detachListeners();
-    clearTimeout(scheduledIdleTimeout[id]);
-    clearTimeout(activityEventInterval[id]);
+    clearTimeout(scheduledIdleTimeout[name]);
+    clearTimeout(activityEventInterval[name]);
   };
 
   const attachListeners = () => {
@@ -81,7 +81,7 @@ const ActivityDetector = ({
       window.addEventListener(eventName, handleUserActivityEvent)
     );
 
-    window.addEventListener('storage', handleStorageChangeEvent);
+    window.addEventListener("storage", handleStorageChangeEvent);
   };
 
   const detachListeners = () => {
@@ -89,7 +89,7 @@ const ActivityDetector = ({
       window.removeEventListener(eventName, handleUserActivityEvent)
     );
 
-    window.removeEventListener('storage', handleStorageChangeEvent);
+    window.removeEventListener("storage", handleStorageChangeEvent);
   };
 
   useEffect(() => {
@@ -110,7 +110,7 @@ const ActivityDetector = ({
       scheduleIdleHandler(timeout);
 
       // store scheduled time for other clients
-      storeLastActivityIntoStorage(getCurrentTime() + timeout, id);
+      storeLastActivityIntoStorage(getCurrentTime() + timeout, name);
     }
     setTimeoutScheduled(true);
   }, [timeoutScheduled, timeout]);
@@ -122,7 +122,7 @@ ActivityDetector.defaultProps = {
   activityEvents: DEFAULT_ACTIVITY_EVENTS,
   timeout: 5 * 60 * 1000,
   enabled: false,
-  id: 'default'
+  name: "default",
 };
 
 export default ActivityDetector;
