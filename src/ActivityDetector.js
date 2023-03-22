@@ -37,9 +37,6 @@ const ActivityDetector = ({
   id,
 }) => {
   const [timeoutScheduled, setTimeoutScheduled] = useState(false);
-
-  id = id ?? 'default';
-
   const scheduleIdleHandler = (time) => {
     clearTimeout(scheduledIdleTimeout[id]);
 
@@ -125,6 +122,7 @@ ActivityDetector.defaultProps = {
   activityEvents: DEFAULT_ACTIVITY_EVENTS,
   timeout: 5 * 60 * 1000,
   enabled: false,
+  id: 'default'
 };
 
 export default ActivityDetector;
