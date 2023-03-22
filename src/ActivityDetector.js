@@ -15,12 +15,12 @@ const LOCAL_STORAGE_KEYS = {
   IDLE_TIMER: "React_Activity_Detector_Idle_Timer",
 };
 
-const storeLastActivityIntoStorage = (time, id) => {
-  localStorage.setItem(LOCAL_STORAGE_KEYS.IDLE_TIMER + "-" + id, time);
+const storeLastActivityIntoStorage = (time, name) => {
+  localStorage.setItem(LOCAL_STORAGE_KEYS.IDLE_TIMER + "-" + name, time);
 };
 
-const getLastActivityFromStorage = (id) => {
-  return localStorage.getItem(LOCAL_STORAGE_KEYS.IDLE_TIMER + "-" + id);
+const getLastActivityFromStorage = (name) => {
+  return localStorage.getItem(LOCAL_STORAGE_KEYS.IDLE_TIMER + "-" + name);
 };
 
 const getCurrentTime = () => new Date().getTime();
