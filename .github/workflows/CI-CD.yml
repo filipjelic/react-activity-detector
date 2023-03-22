@@ -1,12 +1,9 @@
 name: CI-CD
 on:
   push:
-    branches: [ master ]
-
-  pull_request:
-    branches: [ master ]
-    types: [opened, closed]
-
+    branches:
+      - master
+      
 jobs:
   deploy:
     name: Publish to NPM
