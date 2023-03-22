@@ -1,118 +1,128 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 const DEFAULT_ACTIVITY_EVENTS = [
-    'click',
-    'keydown',
-    'DOMMouseScroll',
-    'mousewheel',
-    'mousedown',
-    'touchstart',
-    'touchmove',
-    'focus',
+  "click",
+  "keydown",
+  "DOMMouseScroll",
+  "mousewheel",
+  "mousedown",
+  "touchstart",
+  "touchmove",
+  "focus",
 ];
 
 const LOCAL_STORAGE_KEYS = {
-    IDLE_TIMER: 1,
-}
-
-const storeLastActivityIntoStorage = time => {
-    localStorage.setItem(LOCAL_STORAGE_KEYS.IDLE_TIMER, time);
+  IDLE_TIMER: "React_Activity_Detector_Idle_Timer",
 };
 
-const getLastActivityFromStorage = () => {
-    return localStorage.getItem(LOCAL_STORAGE_KEYS.IDLE_TIMER);
+const storeLastActivityIntoStorage = (time, name) => {
+  localStorage.setItem(LOCAL_STORAGE_KEYS.IDLE_TIMER + "-" + name, time);
+};
+
+const getLastActivityFromStorage = (name) => {
+  return localStorage.getItem(LOCAL_STORAGE_KEYS.IDLE_TIMER + "-" + name);
 };
 
 const getCurrentTime = () => new Date().getTime();
 
-let scheduledIdleTimeout, activityEventInterval;
+let scheduledIdleTimeout = {},
+  activityEventInterval = {};
 
-const ActivityDetector =({ activityEvents, timeout, enabled, onIdle, onActive }) => {
-    const [timeoutScheduled, setTimeoutScheduled] = useState(false);
+const ActivityDetector = ({
+  activityEvents,
+  timeout,
+  enabled,
+  onIdle,
+  onActive,
+  name,
+}) => {
+  const [timeoutScheduled, setTimeoutScheduled] = useState(false);
+  const scheduleIdleHandler = (time) => {
+    clearTimeout(scheduledIdleTimeout[name]);
 
-    const scheduleIdleHandler = time => {
+    scheduledIdleTimeout[name] = setTimeout(() => {
+      const scheduledInactivityCheck = getLastActivityFromStorage(name);
+      const currentTime = getCurrentTime();
 
-        clearTimeout(scheduledIdleTimeout);
+      if (currentTime >= scheduledInactivityCheck) {
+        // if already passed scheduled time, call onIdle
+        if (onIdle) onIdle();
+      }
+    }, time);
+  };
 
-        scheduledIdleTimeout = setTimeout(() => {
-            const scheduledInactivityCheck = getLastActivityFromStorage();
-            const currentTime = getCurrentTime();
+  const resetTimer = () => {
+    clearTimeout(activityEventInterval[name]);
+    activityEventInterval[name] = setTimeout(
+      () => setTimeoutScheduled(false),
+      200
+    );
+  };
 
-            if (currentTime >= scheduledInactivityCheck) {
-                // if already passed scheduled time, call onIdle
-            if (onIdle) onIdle();
-            }
-        }, time);
+  const handleUserActivityEvent = () => {
+    resetTimer();
+    if (onActive) onActive();
+  };
+
+  const handleStorageChangeEvent = ({ key, newValue }) => {
+    if (key === LOCAL_STORAGE_KEYS.IDLE_TIMER + "-" + name) {
+      scheduleIdleHandler(newValue - getCurrentTime());
+    }
+  };
+
+  const stop = () => {
+    detachListeners();
+    clearTimeout(scheduledIdleTimeout[name]);
+    clearTimeout(activityEventInterval[name]);
+  };
+
+  const attachListeners = () => {
+    activityEvents.forEach((eventName) =>
+      window.addEventListener(eventName, handleUserActivityEvent)
+    );
+
+    window.addEventListener("storage", handleStorageChangeEvent);
+  };
+
+  const detachListeners = () => {
+    activityEvents.forEach((eventName) =>
+      window.removeEventListener(eventName, handleUserActivityEvent)
+    );
+
+    window.removeEventListener("storage", handleStorageChangeEvent);
+  };
+
+  useEffect(() => {
+    //library active
+    if (enabled) {
+      attachListeners();
+      // schedule initial timeout
+      setTimeoutScheduled(false);
+    }
+    return () => {
+      stop();
     };
+  }, [enabled]);
 
-    const resetTimer = () => {
-        clearTimeout(activityEventInterval);
-        activityEventInterval = setTimeout(() => setTimeoutScheduled(false), 200);
-    };
+  useEffect(() => {
+    if (!timeoutScheduled) {
+      // on every user activity schedule a new idle handler
+      scheduleIdleHandler(timeout);
 
-    const handleUserActivityEvent = () => {
-        resetTimer();
-        if (onActive) onActive();
-    };
+      // store scheduled time for other clients
+      storeLastActivityIntoStorage(getCurrentTime() + timeout, name);
+    }
+    setTimeoutScheduled(true);
+  }, [timeoutScheduled, timeout]);
 
-    const handleStorageChangeEvent = ({ key, newValue }) => {
-        if (key === LOCAL_STORAGE_KEYS.IDLE_TIMER) {
-            scheduleIdleHandler(newValue - getCurrentTime());
-        }
-    };
-
-    const stop = () => {
-        detachListeners();
-        clearTimeout(scheduledIdleTimeout);
-        clearTimeout(activityEventInterval);
-    };
-
-    const attachListeners = () => {
-        activityEvents.forEach(eventName =>
-            window.addEventListener(eventName, handleUserActivityEvent)
-        );
-
-        window.addEventListener('storage', handleStorageChangeEvent);
-    };
-
-    const detachListeners = () => {
-        activityEvents.forEach(eventName =>
-            window.removeEventListener(eventName, handleUserActivityEvent)
-        );
-
-        window.removeEventListener('storage', handleStorageChangeEvent);
-    };
-
-    useEffect(() => {
-        //library active
-        if (enabled) {
-            attachListeners();
-            // schedule initial timeout
-            setTimeoutScheduled(false);
-        }
-        return () => {
-            stop();
-        };
-    }, [enabled]);
-
-    useEffect(() => {
-        if (!timeoutScheduled) {
-            // on every user activity schedule a new idle handler
-            scheduleIdleHandler(timeout);
-
-            // store scheduled time for other clients
-            storeLastActivityIntoStorage(getCurrentTime() + timeout);
-        }
-        setTimeoutScheduled(true);
-    }, [timeoutScheduled, timeout]);
-
-    return timeoutScheduled;
-}
+  return timeoutScheduled;
+};
 
 ActivityDetector.defaultProps = {
-    activityEvents: DEFAULT_ACTIVITY_EVENTS,
-    timeout: 5 * 60 * 1000,
-    enabled: false
-}
+  activityEvents: DEFAULT_ACTIVITY_EVENTS,
+  timeout: 5 * 60 * 1000,
+  enabled: false,
+  name: "default",
+};
 
 export default ActivityDetector;

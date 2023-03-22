@@ -30,7 +30,7 @@ const onActive = () => {
 console.log("The user is active!");
 }
 
-<ActivityDetector activityEvents={customActivityEvents} enabled={true} timeout={5*1000} onIdle={onIdle} onActive={onActive}/>
+<ActivityDetector activityEvents={customActivityEvents} enabled={true} timeout={5*1000} onIdle={onIdle} onActive={onActive} name="default"/>
 ```
 
 ### Parameter options
@@ -38,3 +38,4 @@ console.log("The user is active!");
 - `enabled`: Boolean value indicating if the A.D. is enabled.
 - `timeout` time in milliseconds which will trigger `onIdle`
 - `activityEvents`: events used to detect if the user is active. Default list of Activity Events is `['click', 'mousemove', 'keydown', 'DOMMouseScroll', 'mousewheel', 'mousedown', 'touchstart', 'touchmove', 'focus']`. If none event is sent the list will consume the default one.
+- `name`: in need of multiple Activity Detectors, provide a custom name. Default value is `default`.
