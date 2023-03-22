@@ -27,6 +27,5 @@ jobs:
 
       - name: Publish to NPM
         run: npm publish
-        if: github.event.pull_request.merged
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
