@@ -1,12 +1,20 @@
 declare module "react-activity-detector" {
   import React from "react";
 
-  type ActivityEvent = keyof WindowEventMap;
+  type ActivityEvent =
+    | "click"
+    | "keydown"
+    | "DOMMouseScroll"
+    | "mousewheel"
+    | "mousedown"
+    | "touchstart"
+    | "touchmove"
+    | "focus";
 
   export interface ActivityDetectorProps {
     /**
      * Array of possible events that trigger user activity
-     * Defaults to ["click", "keydown", "DOMMouseScroll", "mousewheel", "mousedown", "touchstart", "touchmove", "focus"]
+     * Defaults to all events
      */
     activityEvents?: ActivityEvent[];
     /**
