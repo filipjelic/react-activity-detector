@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 const DEFAULT_ACTIVITY_EVENTS = [
   "click",
+  "mousemove",
   "keydown",
   "DOMMouseScroll",
   "mousewheel",
