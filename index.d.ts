@@ -3,6 +3,7 @@ declare module "react-activity-detector" {
 
   type ActivityEvent =
     | "click"
+    | "mousemove"
     | "keydown"
     | "DOMMouseScroll"
     | "mousewheel"
