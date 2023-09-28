@@ -29,7 +29,7 @@ const getCurrentTime = () => new Date().getTime();
 let scheduledIdleTimeout = {},
   activityEventInterval = {};
 
-const ActivityDetector = (props) =>
+const ActivityDetector = (props) => {
   const {
     activityEvents,
     timeout,
