@@ -29,14 +29,21 @@ const getCurrentTime = () => new Date().getTime();
 let scheduledIdleTimeout = {},
   activityEventInterval = {};
 
-const ActivityDetector = ({
-  activityEvents,
-  timeout,
-  enabled,
-  onIdle,
-  onActive,
-  name,
-}) => {
+const ActivityDetector = (props) => {
+  const {
+    activityEvents,
+    timeout,
+    enabled,
+    onIdle,
+    onActive,
+    name,
+  } = {
+    activityEvents: DEFAULT_ACTIVITY_EVENTS,
+    timeout: 5 * 60 * 1000,
+    enabled: false,
+    name: "default",
+    ...props
+  };
   const [timeoutScheduled, setTimeoutScheduled] = useState(false);
   const scheduleIdleHandler = (time) => {
     clearTimeout(scheduledIdleTimeout[name]);
@@ -117,13 +124,6 @@ const ActivityDetector = ({
   }, [timeoutScheduled, timeout]);
 
   return timeoutScheduled;
-};
-
-ActivityDetector.defaultProps = {
-  activityEvents: DEFAULT_ACTIVITY_EVENTS,
-  timeout: 5 * 60 * 1000,
-  enabled: false,
-  name: "default",
 };
 
 export default ActivityDetector;
