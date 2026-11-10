@@ -20,7 +20,7 @@
   "main": "./lib/ActivityDetector.js",
   "license": "MIT",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack && node scripts/prepend-use-client.js",
     "test": "jest",
     "lint": "eslint ."
   },
