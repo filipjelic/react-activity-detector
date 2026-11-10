@@ -27,7 +27,7 @@
     ],
     "overrides": [
         {
-            "files": ["*.config.js"],
+            "files": ["*.config.js", "scripts/**/*.js"],
             "env": {
                 "node": true
             }
