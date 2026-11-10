@@ -17,6 +17,28 @@
     "plugins": [
         "react"
     ],
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
+    "ignorePatterns": [
+        "lib"
+    ],
+    "overrides": [
+        {
+            "files": ["*.config.js"],
+            "env": {
+                "node": true
+            }
+        },
+        {
+            "files": ["**/*.test.js"],
+            "env": {
+                "jest": true
+            }
+        }
+    ],
     "rules": {
     }
 }
