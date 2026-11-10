@@ -1,7 +1,8 @@
 declare module "react-activity-detector" {
   import React from "react";
 
-  type ActivityEvent =
+  /** Default activity events. Any other window event name is accepted too. */
+  type DefaultActivityEvent =
     | "click"
     | "mousemove"
     | "keydown"
@@ -12,29 +13,35 @@ declare module "react-activity-detector" {
     | "touchmove"
     | "focus";
 
+  // `string & {}` accepts any event name while keeping autocomplete for the defaults.
+  type ActivityEvent = DefaultActivityEvent | (string & {});
+
   export interface ActivityDetectorProps {
     /**
-     * Array of possible events that trigger user activity
-     * Defaults to all events
+     * Window events that count as user activity.
+     * Defaults to all of the default activity events.
      */
     activityEvents?: ActivityEvent[];
     /**
-     * Time in milliseconds before user is considered idle
+     * Time in milliseconds of inactivity before the user is considered idle.
      * Defaults to 300000 (5 minutes)
      */
     timeout?: number;
     /**
-     * Whether to start the detector in an idle state
+     * Whether the detector is running. While disabled, onIdle is never called
+     * and other tabs are not affected. Enabling it starts a fresh timeout.
      * Defaults to false
      */
     enabled?: boolean;
     /**
-     * Set a unique id for the detector to allow for multiple detectors
+     * Links detectors across browser tabs: detectors with the same name share
+     * one idle deadline. Detectors on the same page keep their own timers.
+     * Defaults to "default"
      */
     name?: string;
-    /** Event that triggers when user is declared idle */
+    /** Called when the user has been inactive for `timeout` milliseconds */
     onIdle?: () => void;
-    /** Event that triggers when user is declared active */
+    /** Called on every tracked activity event */
     onActive?: () => void;
   }
 
