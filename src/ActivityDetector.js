@@ -34,7 +34,7 @@ const parseDeadline = (value) => {
 const storeDeadlineIntoStorage = (deadline, name) => {
   try {
     localStorage.setItem(getStorageKey(name), deadline);
-  } catch (e) {
+  } catch {
     // ignore: storage unavailable
   }
 };
@@ -42,7 +42,7 @@ const storeDeadlineIntoStorage = (deadline, name) => {
 const getDeadlineFromStorage = (name) => {
   try {
     return parseDeadline(localStorage.getItem(getStorageKey(name)));
-  } catch (e) {
+  } catch {
     return null;
   }
 };
